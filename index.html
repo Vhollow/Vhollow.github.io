@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Vicente Martínez</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Latest compiled and minified CSS -->
@@ -19,14 +19,14 @@ and open the template in the editor.
         <link rel="stylesheet" href="mystyle.css">
 
         <!-- Latest compiled and minified JavaScript -->
-        <script src="js/libs/jquery/jquery.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" ></script>
     </head>
     <body>
         <header>
         <!--Barra de navegacion-->
-        <nav class="navbar navbar-default barra-nav">
-            <div class="container-fluid row">
+        <nav class="navbar navbar-default container-fluid  barra-nav">
+            <div class="row">
                 <div class="navbar-header col-lg-1">
                     <!--Icono de la barra-->
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -39,27 +39,6 @@ and open the template in the editor.
                 </div>
                 <!--Division principal-->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    
-                    <!--Conjunto de opciones(situadas a la izquierda)
-                    <ul class="nav navbar-nav elem-barra">
-                        <li><a href="#">Opcion 1</a></li>
-                        <li><a href="#">Opcion 2</a></li>
-                        <!--Opcion desplegable
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true">Desplegable <span class="caret"></span></a>
-                            <ul class="dropdown-menu black">
-                                <li><a href="#">Opcion</a></li>
-                                <li><a href="#">Opcion 2</a></li>
-                                <li><a href="#">Opcion 3</a></li>
-                                <!--Opciones separadas
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">Opcion separada</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">Opcion separada 2</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    -->
                     <!--Formulario de busqueda-->
                     <form class="navbar-form navbar-right" role="search">
                         <div class="form-group">
@@ -69,64 +48,28 @@ and open the template in the editor.
                     </form>
                     <!--Conjunto de opciones(situadas a la derecha)-->
                     <ul class="nav navbar-nav navbar-right elem-barra">
-                        <li><a href="#">Proyectos</a></li>
-                        <li><a href="#">Otros</a></li>
+                        <li><a href="#1">Quien soy</a></li>
+                        <li><a href="#2">Aptitudes</a></li>
+                        <li><a href="#3">Proyectos</a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
         </header>
         <div class="container-fluid principal">
-            <!--Pruebas
-            <div class="row">
-                <div class="col-lg-8"><button class="btn btn-block btn-primary">Boton</button></div>
-                <div class="col-lg-4"><button class="btn btn-block btn-info">Otro boton</button></div>
-            </div>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nombre</th>
-                        <th>Correo</th>
-                        <th>Direccion</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Vicente</td>
-                        <td>vicentemartinez***********</td>
-                        <td>C/Magal********************************</td>
-                    </tr>
-                    
-                    <tr>
-                        <td>2</td>
-                        <td>Otro</td>
-                        <td>otro***********</td>
-                        <td>C/Cual********************************</td>
-                    </tr>
-                    
-                    <tr>
-                        <td>3</td>
-                        <td>Algun otro</td>
-                        <td>algunotro***********</td>
-                        <td>C/Cual********************************</td>
-                    </tr>
-                </tbody>
-            </table>
-            -->
             <div class="apartado">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-xs-12">
-                        <h2 class="text-center"><img src="img/prisioner.png" class="img-circle text-center" style="width: 200px;height: 200px;"><br>Vicente Martinez</h2>
+                        <h2 class="text-center"><img src="img/prisioner.png" class="img-circle text-center" style="width: 200px;height: 200px;">
+                        <br>Vicente Martínez Franco</h2>
                     </div>
                 </div>
                 <div class="row">
                     <div class="text-center">
                         <nav>
                             <ul class="list-unstyled list-inline">
-                                <li><img src="img/linkedin-2.png"></li>
-                                <li><img src="img/github-2.png"></li>
+                                <li><a href="https://www.linkedin.com/in/vicente-martinez-franco-928697b8"><img src="img/linkedin-2.png"></a></li>
+                                <li><a href="https://www.github.com/Vhollow"><img src="img/github-2.png"></a></li>
                                 <li><img src="img/twitter-2.png"></li>
                                 <li><img src="img/facebook-2.png"></li>
                             </ul>
@@ -134,27 +77,51 @@ and open the template in the editor.
                     </div>
                 </div>
             </div>
-            <div class="row apartado gray-row">
+            <div class="row apartado gray-row" id="1">
                 <dl class="dl-horizontal">
                     <dt>
-                        <h3>¿Quien soy yo?</h3>
+                        <h3 class="text-center">¿Quien soy yo?</h3>
                     </dt>
                     <dd>
                         <br>
                         <p>Soy un estudiante de ingeniería informática, interesado en la informática gráfica, especialmente aquellos temas relacionados con la realidad virtual y la realidad aumentada.<br>
                         Actualmente estudio en la Universidad de Valladolid</p>
-                        <p>Me encanta trabajar en mis proyectos todo el tiempo que puedo y ver como estos van cobrando forma a lo largo del tiempo</p>
                     </dd>
                 </dl>
             </div>
-            <div class="row apartado">
+            <div class="row apartado" id="2">
                 <dl class="dl-horizontal">
                     <dt>
-                        <h3 class="text-center">Segundo<br>apartado</h3>
+                        <h3 class="text-center">Aptitudes</h3>
                     </dt>
                     <dd>
                         <br>
-                        <p>Texto del segundo apartado</p>
+                        <ul class="list-unstyled">
+                            <li><b>Informática gráfica:</b> aún en proceso de aprendizaje.</li>
+                            <li><b>Desarrollo web:</b> especialmente front-end development.</li>
+                            <li><b>Bases de datos:</b> conocimientos básicos.</li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div class="row apartado gray-row" id="3">
+                <dl class="dl-horizontal">
+                    <dt>
+                        <h3 class="text-center">Proyectos<br> desarrollados</h3>
+                    </dt>
+                    <dd class="container-fluid">
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-5 col-lg-offset-1">
+                                <img src="img/Turing.png" class="img-responsive"><br>
+                                <p class="text-center t1">Pagina tributo a Turing</p>
+                            </div>
+                            <div class="col-lg-5 ">
+                                <img src="img/ada.png" class="img-responsive"><br>
+                                <p class="text-center t1">Pagina asociacion para la defensa de los animales<br>
+                                (Proyecto para clase)</p>
+                            </div>
+                        </div>
                     </dd>
                 </dl>
             </div>

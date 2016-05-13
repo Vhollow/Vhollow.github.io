@@ -41,13 +41,16 @@ header {
     background-color: #ddd;
 }
 .apartado{
-    padding: 5% 0%;
+    padding: 10% 0%;
 }
 .navbar-header{
     margin: 0 !important;
 }
 .center{
     margin-left: 40%;
+}
+.t1{
+    font-family: Lobster;
 }
 /*
 .black{
