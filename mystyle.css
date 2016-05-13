@@ -1,0 +1,62 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 13-may-2016, 1:19:04
+    Author     : Vicente
+*/
+h1,h2,h3,h4{
+    font-family: Lobster;
+}       
+.navbar-header a{
+    color: white !important;
+    text-decoration: none;
+}
+header {
+    width: 100%;
+    top:0;
+    left:0;
+    position: fixed;
+    z-index: 10;
+}
+.principal{
+    padding-top: 6em;
+}
+.barra-nav{
+    background-image: linear-gradient(to bottom,#000000,#333333 100%);
+    color: white;
+}
+.elem-barra{
+    color: white !important;
+}
+.elem-barra li a{
+    color: #eeeeee !important;
+}
+.elem-barra li a:hover{
+    background-color: #555 !important;
+}
+.gray-row{
+    background-color: #ddd;
+}
+.apartado{
+    padding: 5% 0%;
+}
+.navbar-header{
+    margin: 0 !important;
+}
+.center{
+    margin-left: 40%;
+}
+/*
+.black{
+    background-color: black;
+}
+.black on:hover{
+    background-color: #333333 !important;
+}
+black on:focus{
+    background-color: #333333 !important;
+}
+*/
