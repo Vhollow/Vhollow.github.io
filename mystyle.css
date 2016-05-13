@@ -9,6 +9,8 @@ and open the template in the editor.
 */
 h1,h2,h3,h4{
     font-family: Lobster;
+}
+h2,h3{
     color: #086;
 }
 .navbar-header a{
