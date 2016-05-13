@@ -9,7 +9,8 @@ and open the template in the editor.
 */
 h1,h2,h3,h4{
     font-family: Lobster;
-}       
+    color: #086;
+}
 .navbar-header a{
     color: white !important;
     text-decoration: none;
@@ -51,6 +52,9 @@ header {
 }
 .t1{
     font-family: Lobster;
+}
+#0{
+    background-image: url("img/fondo-1.jpg");
 }
 /*
 .black{
