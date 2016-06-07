@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>D3 Test</title>
+		<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+		<style type="text/css">
+			.axis path,
+			.axis line {
+			    fill: none;
+			    stroke: black;
+			    shape-rendering: crispEdges;
+			}
+
+			.axis text {
+			    font-family: sans-serif;
+			    font-size: 11px;
+			}
+			.axis text{
+			    font-family: sans-serif;
+			    font-size: 11px;
+			}
+			text{
+			    font-family: sans-serif;
+			    font-size: 15px;
+			}
+		</style>
+	</head>
+	<body >
+		<div id="conjunto" style="width: 1100px; height: 450px"></div>
+		<script type="text/javascript">
+			var selectValue;
+			var Ano_inicio;
+			var num_Anos;
+			var data;
+			var lugar;
+			function maxValor(datos_transformados,num_Anos){
+				var max=0;
+				for(var ind=0;ind<num_Anos;ind++){
+					if(parseInt(datos_transformados.carbon[ind])>max){
+						max=parseInt(datos_transformados.carbon[ind]);
+					}
+					if(parseInt(datos_transformados.eolica[ind])>max){
+						max=parseInt(datos_transformados.eolica[ind]);
+					}
+					if(parseInt(datos_transformados.hidraulica[ind])>max){
+						max=parseInt(datos_transformados.hidraulica[ind]);
+					}
+					if(parseInt(datos_transformados.nuclear[ind])>max){
+						max=parseInt(datos_transformados.nuclear[ind]);
+					}
+					if(parseInt(datos_transformados.solar[ind])>max){
+						max=parseInt(datos_transformados.solar[ind]);
+					}
+					/*if(parseInt(datos_transformados.primaria[ind])>max){
+						max=parseInt(datos_transformados.solar[ind]);
+					}
+					if(parseInt(datos_transformados.total[ind])>max){
+						max=parseInt(datos_transformados.total[ind]);
+					}*/
+				}
+				return max;
+			}
+			function Ano_repetido(dato,array_Anos){
+				if(array_Anos.length==0)return false;
+				for(var j=0;j<array_Anos.length;j++){
+					if(dato==array_Anos[j]){
+						return true;
+					}
+				}
+				return false;
+			}
+			function calcula_Anos(datos){
+				var array_Anos=[];
+				var cont=0;
+				for(var i=0;i<datos.length;i++){
+					if(!Ano_repetido(datos[i].Ano,array_Anos)){
+						array_Anos[array_Anos.length]=datos[i].Ano;
+						cont++;
+					}
+				}
+				return cont;
+			}
+			function onchange() {
+					d3.selectAll('svg').remove();
+					d3.selectAll('text').remove();
+					lugar = d3.select('select').property('value');
+					d3.selectAll('#cont_s').remove();
+					d3.selectAll('select').remove();
+					datos_transformados=transformDatos(data,num_Anos,Ano_inicio,lugar);
+					creaSvg(datos_transformados,num_Anos,Ano_inicio);
+			}
+			function transformDatos(datos,num_Anos,Ano_inicio,lugar){
+				var datos_transformados={carbon:[],eolica:[],hidraulica:[],nuclear:[],solar:[],primaria:[],total:[]};
+				for(var i=0;i<num_Anos;i++){
+					datos_transformados.carbon[i]=0;
+					datos_transformados.eolica[i]=0;
+					datos_transformados.hidraulica[i]=0;
+					datos_transformados.nuclear[i]=0;
+					datos_transformados.solar[i]=0;
+					datos_transformados.primaria[i]=0;
+					datos_transformados.total[i]=0;
+				}
+				if(lugar=="Comunidad"){
+					for(var j=0;j<datos.length;j++){
+						if(datos[j].Indicador=="Produccion de energia con carbon"){
+							datos_transformados.carbon[datos[j].Ano-Ano_inicio]+=parseInt(datos[j].Valor);
+							datos_transformados.total[datos[j].Ano-Ano_inicio]+=parseInt(datos[j].Valor);
+						}
+						if(datos[j].Indicador=="Produccion de energia eolica"){
+							datos_transformados.eolica[datos[j].Ano-Ano_inicio]+=parseInt(datos[j].Valor);
+							datos_transformados.total[datos[j].Ano-Ano_inicio]+=parseInt(datos[j].Valor);
+						}
+						if(datos[j].Indicador=="Produccion de energia hidraulica"){
+							datos_transformados.hidraulica[datos[j].Ano-Ano_inicio]+=parseInt(datos[j].Valor);
+							datos_transformados.total[datos[j].Ano-Ano_inicio]+=parseInt(datos[j].Valor);
+						}
+						if(datos[j].Indicador=="Produccion de energia nuclear"){
+							datos_transformados.nuclear[datos[j].Ano-Ano_inicio]+=parseInt(datos[j].Valor);
+							datos_transformados.total[datos[j].Ano-Ano_inicio]+=parseInt(datos[j].Valor);
+						}
+						if(datos[j].Indicador=="Produccion de energia solar"){
+							datos_transformados.solar[datos[j].Ano-Ano_inicio]+=parseInt(datos[j].Valor);
+							datos_transformados.total[datos[j].Ano-Ano_inicio]+=parseInt(datos[j].Valor);
+						}
+						/*if(datos[j].Indicador=="Produccion de energia primaria"){
+							datos_transformados.primaria[datos[j].Ano-Ano_inicio]+=parseInt(datos[j].Valor);
+							//datos_transformados.total[datos[j].Ano-Ano_inicio]+=parseInt(datos[j].Valor);
+						}*/
+					}
+				}
+				else{
+					for(var j=0;j<datos.length;j++){
+						if(datos[j].Indicador=="Produccion de energia con carbon" && datos[j].Provincia==lugar){
+							datos_transformados.carbon[datos[j].Ano-Ano_inicio]+=parseInt(datos[j].Valor);
+							datos_transformados.total[datos[j].Ano-Ano_inicio]+=parseInt(datos[j].Valor);
+						}
+						if(datos[j].Indicador=="Produccion de energia eolica" && datos[j].Provincia==lugar){
+							datos_transformados.eolica[datos[j].Ano-Ano_inicio]+=parseInt(datos[j].Valor);
+							datos_transformados.total[datos[j].Ano-Ano_inicio]+=parseInt(datos[j].Valor);
+						}
+						if(datos[j].Indicador=="Produccion de energia hidraulica" && datos[j].Provincia==lugar){
+							datos_transformados.hidraulica[datos[j].Ano-Ano_inicio]+=parseInt(datos[j].Valor);
+							datos_transformados.total[datos[j].Ano-Ano_inicio]+=parseInt(datos[j].Valor);
+						}
+						if(datos[j].Indicador=="Produccion de energia nuclear" && datos[j].Provincia==lugar){
+							datos_transformados.nuclear[datos[j].Ano-Ano_inicio]+=parseInt(datos[j].Valor);
+							datos_transformados.total[datos[j].Ano-Ano_inicio]+=parseInt(datos[j].Valor);
+						}
+						if(datos[j].Indicador=="Produccion de energia solar" && datos[j].Provincia==lugar){
+							datos_transformados.solar[datos[j].Ano-Ano_inicio]+=parseInt(datos[j].Valor);
+							datos_transformados.total[datos[j].Ano-Ano_inicio]+=parseInt(datos[j].Valor);
+						}
+
+						/*if(datos[j].Indicador=="Produccion de energia primaria" && datos[j].Provincia==lugar){
+							datos_transformados.primaria[datos[j].Ano-Ano_inicio]+=parseInt(datos[j].Valor);
+							//datos_transformados.total[datos[j].Ano-Ano_inicio]+=parseInt(datos[j].Valor);
+						}*/
+					}
+				}
+				return datos_transformados;
+			}
+			function creaSvg(datos_transformados,num_Anos,Ano_inicio){
+					var colors=['#880000','#888800','#008800','#008888','#000088','#880088'];
+					var data = ["Comunidad", "Leon", "Palencia","Burgos","Zamora","Valladolid", "Soria","Segovia","Salamanca","Avila"];
+					var tipo_energia = ["Carbón","Eólica","Hidráulica","Nuclear","Solar","Primaria"];
+					var maximo = maxValor(datos_transformados,num_Anos);
+					var ancho=850;
+					var alto=400;
+					var dist_datos=770/num_Anos;
+					var factor_cambio=340/maximo;
+					var y_ant=[];
+					var escalaHorizontal = d3.scale.linear().domain([parseInt(Ano_inicio),parseInt(Ano_inicio)+num_Anos-1]).range([75,795]);
+					var escalaVertical = d3.scale.linear().domain([0,parseInt(maximo)]).range([alto-30,30]);
+					var svg = d3.select('#conjunto')
+						.append('svg')
+						.attr('width', ancho)
+						.attr('height', alto)
+						.style('float','left')
+						.style('border-radius','5px 5px 5px 5px')
+						.style('border','2px solid black');
+					//Etiqueta superior
+					svg.append('text')
+						.attr('x',ancho/2-20)
+						.attr('y',20)
+						.text(lugar);
+					//eje inferior
+					svg.append('g')
+						.attr('class','axis')
+						.attr('transform','translate(0,370)')
+						.call(d3.svg.axis()
+							.scale(escalaHorizontal)
+							.ticks(num_Anos)
+							.orient('bottom'));
+					//eje lateral
+					svg.append('g')
+						.attr('class','axis')
+						.attr('transform','translate(75,0)')
+						.call(d3.svg.axis()
+							.scale(escalaVertical)
+							.ticks(5)
+							.orient('left'));
+					for(var i=0;i<datos_transformados.carbon.length;i++){
+						/*//dato total
+						svg.append('circle')
+							.attr('cx',75+i*dist_datos)
+							.attr('cy',370-datos_transformados.total[i]*factor_cambio)
+							.attr('value',datos_transformados.total[i])
+							.attr('r',0)
+							.transition()
+							.duration(2000)
+							.attr('r',7)
+							.style('stroke','#000000')
+							.style('fill','#000000');
+						//dato primaria
+						svg.append('circle')
+							.attr('cx',75+i*dist_datos)
+							.attr('cy',370-datos_transformados.primaria[i]*factor_cambio)
+							.attr('value',datos_transformados.primaria[i])
+							.attr('r',0)
+							.transition()
+							.duration(2000)
+							.attr('r',7)
+							.style('stroke',colors[5])
+							.style('fill',colors[5]);*/
+						//dato carbon
+						if(datos_transformados.carbon[i]!=0){
+						svg.append('circle')
+							.attr('cx',75+i*dist_datos)
+							.attr('cy',370-datos_transformados.carbon[i]*factor_cambio)
+							.attr('value',datos_transformados.carbon[i])
+							.attr('r',0)
+							.transition()
+							.duration(2000)
+							.attr('r',5)
+							.style('stroke',colors[0])
+							.style('fill',colors[0]);}
+						//dato eolica
+						if(datos_transformados.eolica[i]!=0){
+						svg.append('circle')
+							.attr('cx',75+i*dist_datos)
+							.attr('cy',370-datos_transformados.eolica[i]*factor_cambio)
+							.attr('value',datos_transformados.eolica[i])
+							.attr('r',0)
+							.transition()
+							.duration(2000)
+							.attr('r',5)
+							.style('stroke',colors[1])
+							.style('fill',colors[1]);}
+						//dato hidraulica
+						if(datos_transformados.hidraulica[i]!=0){
+						svg.append('circle')
+							.attr('cx',75+i*dist_datos)
+							.attr('cy',370-datos_transformados.hidraulica[i]*factor_cambio)
+							.attr('value',datos_transformados.hidraulica[i])
+							.attr('r',0)
+							.transition()
+							.duration(2000)
+							.attr('r',5)
+							.style('stroke',colors[2])
+							.style('fill',colors[2]);}
+						//dato nuclear
+						if(datos_transformados.nuclear[i]!=0){
+						svg.append('circle')
+							.attr('cx',75+i*dist_datos)
+							.attr('cy',370-datos_transformados.nuclear[i]*factor_cambio)
+							.attr('value',datos_transformados.nuclear[i])
+							.attr('r',0)
+							.transition()
+							.duration(2000)
+							.attr('r',5)
+							.style('stroke',colors[3])
+							.style('fill',colors[3]);}
+						//dato solar
+						if(datos_transformados.solar[i]!=0){
+						svg.append('circle')
+							.attr('cx',75+i*dist_datos)
+							.attr('cy',370-datos_transformados.solar[i]*factor_cambio)
+							.attr('value',datos_transformados.solar[i])
+							.attr('r',0)
+							.transition()
+							.duration(2000)
+							.attr('r',5)
+							.style('stroke',colors[4])
+							.style('fill',colors[4]);}
+						if(i!=0){
+							//lineas entre datos
+							/*svg.append('line')
+								.attr('x1',75+(i-1)*dist_datos)
+								.attr('y1',y_ant[5])
+								.attr('x2',75+(i-1)*dist_datos)
+								.attr('y2',y_ant[5])
+								.transition()
+								.duration(2000)
+								.attr('x2',75+i*dist_datos)
+								.attr('y2',370-datos_transformados.primaria[i]*factor_cambio)
+								.style('stroke-width',2)
+								.style('stroke',colors[5]);*/
+							svg.append('line')
+								.attr('x1',75+(i-1)*dist_datos)
+								.attr('y1',y_ant[0])
+								.attr('x2',75+(i-1)*dist_datos)
+								.attr('y2',y_ant[0])
+								.transition()
+								.duration(2000)
+								.attr('x2',75+i*dist_datos)
+								.attr('y2',370-datos_transformados.carbon[i]*factor_cambio)
+								.style('stroke-width',2)
+								.style('stroke',colors[0]);
+							svg.append('line')
+								.attr('x1',75+(i-1)*dist_datos)
+								.attr('y1',y_ant[1])
+								.attr('x2',75+(i-1)*dist_datos)
+								.attr('y2',y_ant[1])
+								.transition()
+								.duration(2000)
+								.attr('x2',75+i*dist_datos)
+								.attr('y2',370-datos_transformados.eolica[i]*factor_cambio)
+								.style('stroke-width',2)
+								.style('stroke',colors[1]);
+							svg.append('line')
+								.attr('x1',75+(i-1)*dist_datos)
+								.attr('y1',y_ant[2])
+								.attr('x2',75+(i-1)*dist_datos)
+								.attr('y2',y_ant[2])
+								.transition()
+								.duration(2000)
+								.attr('x2',75+i*dist_datos)
+								.attr('y2',370-datos_transformados.hidraulica[i]*factor_cambio)
+								.style('stroke-width',2)
+								.style('stroke',colors[2]);
+							svg.append('line')
+								.attr('x1',75+(i-1)*dist_datos)
+								.attr('y1',y_ant[3])
+								.attr('x2',75+(i-1)*dist_datos)
+								.attr('y2',y_ant[3])
+								.transition()
+								.duration(2000)
+								.attr('x2',75+i*dist_datos)
+								.attr('y2',370-datos_transformados.nuclear[i]*factor_cambio)
+								.style('stroke-width',2)
+								.style('stroke',colors[3]);
+							svg.append('line')
+								.attr('x1',75+(i-1)*dist_datos)
+								.attr('y1',y_ant[4])
+								.attr('x2',75+(i-1)*dist_datos)
+								.attr('y2',y_ant[4])
+								.transition()
+								.duration(2000)
+								.attr('x2',75+i*dist_datos)
+								.attr('y2',370-datos_transformados.solar[i]*factor_cambio)
+								.style('stroke-width',2)
+								.style('stroke',colors[4]);
+						}
+						y_ant=[370-datos_transformados.carbon[i]*factor_cambio,370-datos_transformados.eolica[i]*factor_cambio,370-datos_transformados.hidraulica[i]*factor_cambio,370-datos_transformados.nuclear[i]*factor_cambio,370-datos_transformados.solar[i]*factor_cambio,370-datos_transformados.primaria[i]*factor_cambio];
+					}
+					//Indice
+					var svg2 = d3.select('#conjunto')
+						.append('svg')
+						.style('float','right')
+						.attr('width', 200)
+						.attr('height', 200)
+						.style('border-radius','5px 5px 5px 5px')
+						.style('border','2px solid black');
+					for(var i=1;i<6;i++){
+						svg2.append('line')
+							.attr('x1',10)
+							.attr('y1',20+i*30)
+							.attr('x2',100)
+							.attr('y2',20+i*30)
+							.style('stroke-width',2)
+							.style('stroke',colors[i-1]);
+						svg2.append('text')
+						.attr('x',105)
+						.attr('y',20+i*30)
+						.text(tipo_energia[i-1]);
+					}
+					//Selector
+					var select_cont = d3.select('#conjunto')
+						.append('div')
+						.style('float','right')
+						.style('padding-top','20px')
+						.attr('id','cont_s')
+						.attr('width', 200)
+						.append('text')
+							.text('Elija region:');
+					var select= d3.select('#cont_s')
+						.append('select')
+					  	.attr('class','select')
+						.attr('width', 200)
+					    .on('change',onchange);
+					var options = select
+					  .selectAll('option')
+						.data(data).enter()
+						.append('option')
+							.text(function (d) { return d; })
+						.each(function (d){
+							var opt=d3.select(this);
+							if(this.value==lugar){
+								opt.attr('selected','selected');
+							}
+						});
+				d3.selectAll('circle')
+						.on('mouseover',function(){						//Muestra el valor al pasar el raton sobre el dato
+							if (d3.select(this).attr('cx')!=75+(num_Anos-1)*dist_datos){
+								svg.append('text')
+									.attr('id','temporal')
+									.attr('x',d3.select(this).attr('cx'))
+									.attr('y',d3.select(this).attr('cy'))
+									.text(d3.select(this).attr('value'))
+									.style('font-weight','bold');
+							}
+							else{
+								svg.append('text')
+									.attr('id','temporal')
+									.attr('x',d3.select(this).attr('cx')-20)
+									.attr('y',d3.select(this).attr('cy'))
+									.text(d3.select(this).attr('value'))
+									.style('font-weight','bold');
+							}
+						})
+						.on('mouseout',function(){						//Elimina el valor al pasar el raton
+							d3.selectAll('#temporal').remove();
+						});
+			}
+			d3.csv("./Datos_produccion_energetica.csv",function(datos){
+				data=datos;
+				Ano_inicio=datos[1].Ano;
+				num_Anos=calcula_Anos(datos);
+				lugar="Comunidad";
+				var datos_transformados_Comunidad=transformDatos(datos,num_Anos,Ano_inicio,"Comunidad");
+				//Grafico
+				creaSvg(datos_transformados_Comunidad,num_Anos,Ano_inicio);
+			});
+		</script>
+	</body>
+
+</html>
