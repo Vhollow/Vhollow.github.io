@@ -21,12 +21,13 @@ and open the template in the editor.
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" ></script>
+        <!--Smooth scroll-->
         <script src="js/smooth-scroll.js"></script>
     </head>
     <body>
         <header>
         <!--Barra de navegacion-->
-        <nav class="navbar navbar-inverse container-fluid">
+        <nav class="navbar navbar-inverse container-fluid fixed">
             <div class="row">
                 <div class="navbar-header col-lg-1">
                     <!--Icono de la barra-->
@@ -36,7 +37,7 @@ and open the template in the editor.
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a data-scroll href="#ancla-0"><h4>VMF</h4></a>
+                    <a><h4>VMF</h4></a>
                 </div>
                 <!--Division principal-->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -49,16 +50,18 @@ and open the template in the editor.
                     </form>
                     <!--Conjunto de opciones(situadas a la derecha)-->
                     <ul class="nav navbar-nav navbar-right elem-barra">
-                        <li><a data-scroll id="nav1" href="#ancla-1" class="1 scroll">Quien soy</a></li>
-                        <li><a data-scroll id="nav2" href="#ancla-2" class="2 scroll">Aptitudes</a></li>
-                        <li><a data-scroll id="nav3" href="#ancla-3" class="3 scroll">Proyectos</a></li>
+                    	<li><a data-scroll href="#ancla-0">Inicio</a></li>
+                        <li><a data-scroll href="#ancla-1">Quien soy</a></li>
+                        <li><a data-scroll href="#ancla-2">Aptitudes</a></li>
+                        <li><a data-scroll href="#ancla-3">Proyectos</a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
         </header>
+        <div id="ancla-0"></div>
         <div class="container-fluid principal">
-            <div class="apartado ancla" id="ancla-0">
+            <section class="apartado">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-xs-12">
                         <h2 class="text-center"><img src="img/prisioner.png" class="img-circle text-center" style="width: 200px;height: 200px;">
@@ -77,8 +80,8 @@ and open the template in the editor.
                         </nav>
                     </div>
                 </div>
-            </div>
-            <div class="ancla" id="ancla-1"></div>
+            </section>
+            <div id="ancla-1"></div>
             <section class="row apartado gray-row" id="1">
                 <dl class="dl-horizontal">
                     <dt>
@@ -91,7 +94,7 @@ and open the template in the editor.
                     </dd>
                 </dl>
             </section>
-            <div class="ancla" id="ancla-2"></div>
+            <div id="ancla-2"></div>
             <section class="row apartado" id="2">
                 <dl class="dl-horizontal">
                     <dt>
@@ -109,7 +112,7 @@ and open the template in the editor.
                     </dd>
                 </dl>
             </section>
-            <div class="ancla" id="ancla-3"></div>
+            <div id="ancla-3"></div>
             <section class="row apartado gray-row" id="3">
                 <dl class="dl-horizontal">
                     <dt>
@@ -154,28 +157,28 @@ and open the template in the editor.
 						  <div class="carousel-inner" role="listbox">
 						    <div class="item active">
 						      <img src="img/Turing.png" alt="...">
-						      <div class="carousel-caption">
-						        <p class="text-center t1">Pagina tributo a Turing</p>
+						      <div class="carousel-caption footcuadro">
+						        <p class="text-center">Pagina tributo a Turing</p>
 						      </div>
 						    </div>
 						    <div class="item">
 						      <img src="img/ada.png" alt="...">
-						      <div class="carousel-caption">
-						        <p class="text-center t1">Pagina asociacion para la defensa de los animales<br>
+						      <div class="carousel-caption footcuadro">
+						        <p class="text-center">Pagina asociacion para la defensa de los animales<br>
                                 (Proyecto para clase)</p>
 						      </div>
 						    </div>
 						    <div class="item">
 						      <img src="img/terreno.png" alt="...">
-						      <div class="carousel-caption">
-						        <p class="text-center t1">Generador de terrenos en webgl<br>
+						      <div class="carousel-caption footcuadro">
+						        <p class="text-center">Generador de terrenos en webgl<br>
                                 (Proyecto para clase)</p>
 						      </div>
 						    </div>
 						    <div class="item">
 						      <img src="img/visual-cyl.png" alt="...">
-						      <div class="carousel-caption">
-						        <p class="text-center t1">Visualización de datos de la producción energética en Castilla y Leon<br>
+						      <div class="carousel-caption footcuadro">
+						        <p class="text-center">Visualización de datos de la producción energética en Castilla y Leon<br>
                                 (Proyecto para clase)</p>
 						      </div>
 						    </div>
