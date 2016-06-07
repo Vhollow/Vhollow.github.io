@@ -28,11 +28,11 @@ header {
     z-index: 10;
 }
 .principal{
-    padding-top: 6em;
+    padding-top: 3.7em;
 }
 
 .gray-row{
-    background-color: #ddd;
+    background-color: #efefef;
 }
 .apartado{
     padding: 10% 0%;
@@ -50,6 +50,27 @@ header {
 #0{
     background-image: url("img/fondo-1.jpg");
 }
+.fondoa{
+    background-image: url("img/tree2.jpg");
+    background-repeat: no-repeat;
+    background-size:30%;
+    background-position: bottom left;
+}
+.fondob{
+    background-image: url("img/tree3.jpg");
+    background-repeat: no-repeat;
+    background-size:10%;
+    background-position: bottom;
+}
+.fondoc{
+    background-image: url("img/tree2.jpg");
+    background-repeat: no-repeat;
+    background-size:30%;
+    background-position: bottom right;
+}
+.carousel{
+    border:2px solid #086;
+}
 .carousel-indicators li{
     border-color: black;
 }
@@ -60,7 +81,7 @@ header {
     font-family: Lobster;
     overflow: hidden;
     width: 100% !important;
-    padding-bottom: 10%;
+    padding-bottom: 8%;
     height: 5em;
     color:black;
     position: absolute;
