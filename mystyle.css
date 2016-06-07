@@ -27,36 +27,31 @@ header {
 .principal{
     padding-top: 6em;
 }
-.barra-nav{
-    background-image: linear-gradient(to bottom,#000000,#333333 100%);
-    color: white;
-}
-.elem-barra{
-    color: white !important;
-}
-.elem-barra li a{
-    color: #eeeeee !important;
-}
-.elem-barra li a:hover{
-    background-color: #555 !important;
-}
+
 .gray-row{
     background-color: #ddd;
 }
 .apartado{
     padding: 10% 0%;
 }
-.navbar-header{
-    margin: 0 !important;
-}
+
 .center{
     margin-left: 40%;
 }
 .t1{
     font-family: Lobster;
+    background-color: #fff;
+    border: 3px solid #086;
+    color: black;
 }
 #0{
     background-image: url("img/fondo-1.jpg");
+}
+.carousel-indicators li{
+    border-color: black;
+}
+.carousel-indicators .active{
+    background-color: black;
 }
 /*
 .black{
