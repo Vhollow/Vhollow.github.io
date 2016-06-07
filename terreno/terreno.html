@@ -1,0 +1,312 @@
+<!doctype html>
+<html>
+	<head>
+		<title>HeightField</title>
+		<style>
+			body{ background-color: grey; }
+			canvas{ background-color: white; }
+		</style>
+        <script src="./jquery.min.js"></script>
+		<script src="./webgl-debug.js"></script>		
+		<script src="./gl-matrix-min.js"></script>
+   		<script src="./raf_polyfill.js"></script>
+		<script>
+			var gl = null,
+				canvas = null,
+				glProgram = null,
+				fragmentShader = null,
+				vertexShader = null;
+				
+			var vertexPositionAttribute = null,
+				trianglesVerticeBuffer = null,
+				vertexIndexBuffer = null;
+
+			var mvMatrix = mat4.create(),
+				pMatrix = mat4.create();
+			var vertexPositionData = [];
+			
+			//mouse events	
+			var capture = false;
+           	var start = 0;
+			
+			var angleX = 0.0,
+				angleY = 0.0;	
+
+			var paused = false;
+			$(document).keyup(function(evt){
+                switch(evt.keyCode){
+	                case 80: //'p'
+	                    paused =!paused;
+	                    break;	                
+	                default:
+	                	break;    
+	            }    	
+		    });	 
+
+			function initWebGL()
+			{
+				canvas = document.getElementById("my-canvas");  
+				try{
+					gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");					
+				}catch(e){
+				}
+								
+				if(gl)
+				{
+					gl = WebGLDebugUtils.makeDebugContext(gl);
+
+					initShaders();
+					creaPlano(7.0, 7);
+					getMatrixUniforms();
+					
+					vertexPositionAttribute = gl.getAttribLocation(glProgram, "aVertexPosition");
+	                gl.enableVertexAttribArray(vertexPositionAttribute);
+    			    
+    			    gl.viewport(0, 0, canvas.width, canvas.height);
+
+					(function animLoop(){
+						if(!paused){
+							setMatrixUniforms()
+							setupWebGL();
+							drawScene(); 
+						}
+						requestAnimationFrame(animLoop, canvas);
+					})();
+				}else{	
+					alert(  "Error: Your browser does not appear to support WebGL.");
+				}
+			}
+
+			function getMatrixUniforms(){
+                glProgram.pMatrixUniform = gl.getUniformLocation(glProgram, "uPMatrix");
+                glProgram.mvMatrixUniform = gl.getUniformLocation(glProgram, "uMVMatrix");          
+				glProgram.samplerUniform = gl.getUniformLocation(glProgram, "uSampler");
+            }
+			
+			function setMatrixUniforms() {
+				mat4.perspective(45, canvas.width / canvas.height, 0.1, 100.0, pMatrix);
+				mat4.identity(mvMatrix);
+				mat4.translate(mvMatrix, [0.0, -2.0, -6.0]);              
+				mat4.rotate(mvMatrix, angleX*2*Math.PI/180.0, [0.0, 1.0, 0.0]);              
+				mat4.rotate(mvMatrix, angleY*2*Math.PI/180.0, [1.0, 0.0, 0.0]);              
+							
+                gl.uniformMatrix4fv(glProgram.pMatrixUniform, false, pMatrix);
+                gl.uniformMatrix4fv(glProgram.mvMatrixUniform, false, mvMatrix);
+            }
+			
+			function setupWebGL()
+			{
+				//set the clear color to a shade of green
+				gl.clearColor(0.1, 0.1, 0.1, 1.0); 	
+				gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT); 	
+				gl.enable(gl.DEPTH_TEST);
+			}
+			
+			function initShaders()
+			{
+				// Esta función inicializa los shaders
+       
+        		//1.Obtengo la referencia de los shaders 
+		        var fs_source = document.getElementById('fragmentShader').innerHTML;
+		        var vs_source = document.getElementById('vertexShader').innerHTML;
+		
+		        //2. Compila los shaders  
+		        vertexShader = makeShader(vs_source, gl.VERTEX_SHADER);
+		        fragmentShader = makeShader(fs_source, gl.FRAGMENT_SHADER);
+		        
+		          ///3. Crea un programa
+		          glProgram = gl.createProgram();
+		        
+		        //4. Adjunta al programa cada shader
+		          gl.attachShader(glProgram, vertexShader);
+		          gl.attachShader(glProgram, fragmentShader);
+		          gl.linkProgram(glProgram);
+		
+		        if (!gl.getProgramParameter(glProgram, gl.LINK_STATUS)) {
+		           alert("No se puede inicializar el Programa .");
+		          }
+		        
+		        //5. Usa el programa
+		        gl.useProgram(glProgram);
+			}
+			
+			function makeShader(src, type)
+			{
+				//compile the vertex shader
+				var shader = gl.createShader(type);
+                gl.shaderSource(shader, src);
+                gl.compileShader(shader);
+
+                if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+                    alert("Error compiling shader: " + gl.getShaderInfoLog(shader));
+                }
+				return shader;
+			}
+			
+			function drawScene()
+			{
+				gl.bindBuffer(gl.ARRAY_BUFFER, trianglesVerticeBuffer);
+				gl.vertexAttribPointer(vertexPositionAttribute, 3, gl.FLOAT, false, 0, 0);
+
+				gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, vertexIndexBuffer);
+				gl.drawElements(gl.TRIANGLE_STRIP, vertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
+				//gl.drawElements(gl.POINTS, vertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
+			}
+
+			function algPuntoMedio(arI, arD, abI, abD, divisiones,iteracion)
+			{				
+				if( (arI[0] + 1) == abD[0] || 	(arI[1] + 1) == abD[1] )
+				{
+					return;
+				}
+
+				//array indices
+				var punto_medio = [(arI[0] + abD[0])/2, 
+								(arI[1] + abD[1])/2
+				];
+				
+				var medio_izquierdo = [	arI[0], 
+								(arI[1] + abI[1])/2
+				];
+				var medio_derecho = [ arD[0], 
+								(arD[1] + abD[1])/2
+				];
+				var medio_arriba = [	(arI[0] + arD[0])/2, 
+								arI[1]
+				];
+				var medio_abajo = [(abI[0] + abD[0])/2, 
+								abI[1]]; 
+
+				//alturas actuales
+				var arI_altura = vertexPositionData[(arI[0] + arI[1] * (divisiones+1))*3+1];
+				var arD_altura = vertexPositionData[(arD[0] + arD[1] * (divisiones+1))*3+1];
+				var abI_altura = vertexPositionData[(abI[0] + abI[1] * (divisiones+1))*3+1];
+				var abD_altura = vertexPositionData[(abD[0] + abD[1] * (divisiones+1))*3+1];
+
+				//nuevos puntos
+				var valor_arriba = (arI_altura + arD_altura)/2.0;
+				vertexPositionData[(medio_arriba[0] + medio_arriba[1] * (divisiones+1))*3+1] = valor_arriba;
+				var valor_abajo = (abI_altura + abD_altura)/2.0;
+				vertexPositionData[(medio_abajo[0] + medio_abajo[1] * (divisiones+1))*3+1] = valor_abajo;
+			
+				var valor_izquierda = (arI_altura + abI_altura)/2.0;
+				vertexPositionData[(medio_izquierdo[0] + medio_izquierdo[1] * (divisiones+1))*3+1] = valor_izquierda;
+				var valor_derecha = (arD_altura + abD_altura)/2.0;
+				vertexPositionData[(medio_derecho[0] + medio_derecho[1] * (divisiones+1))*3+1] = valor_derecha;
+
+				//punto_medio has random term--/La elevacion del punto medio tiene un factor aleatorio que se va etenuando con cada iteracion.
+				vertexPositionData[(punto_medio[0] + punto_medio[1] * (divisiones+1)) * 3 + 1] = (arI_altura+arD_altura+abI_altura+abD_altura)/4.0 
+					+(-0.5+Math.random())*Math.pow(0.65, iteracion-2.0);
+
+				//repeat with four quads	
+				algPuntoMedio( arI, medio_arriba, medio_izquierdo, punto_medio, divisiones, iteracion+1 );
+				algPuntoMedio( medio_arriba, arD, punto_medio, medio_derecho, divisiones, iteracion+1 );
+				algPuntoMedio( medio_izquierdo, punto_medio, abI, medio_abajo, divisiones, iteracion+1 );
+				algPuntoMedio( punto_medio, medio_derecho, medio_abajo, abD, divisiones, iteracion+1 );
+			}
+
+            function creaPlano(size, power){
+				size = (typeof size !== 'undefined') ? size : 1.0;
+				divisiones = (typeof power !== 'undefined') ? (Math.pow(2.0, power) ) : 8;
+				var segment_size = size/divisiones;
+				vertexPositionData = [];
+				for(var i=0;i<=divisiones;++i)
+				{
+					for(var j=0;j<=divisiones;++j)
+					{
+						vertexPositionData.push(i*segment_size - 0.5*size);
+						vertexPositionData.push(0.0);
+						vertexPositionData.push(j*segment_size - 0.5*size);
+					}
+				}
+
+				//seed the corners
+				vertexPositionData[(0 + 0*(divisiones+1))*3+1] = 1.5;
+				vertexPositionData[(divisiones + 0*(divisiones+1))*3+1] = 3.5;
+				vertexPositionData[(0 + divisiones*(divisiones+1))*3+1] = 2.0;
+				vertexPositionData[(divisiones + divisiones*(divisiones+1))*3+1] = 1.0;
+
+				algPuntoMedio(
+					[0,0], 
+					[divisiones, 0], 
+					[0, divisiones], 
+					[divisiones, divisiones], 
+					divisiones,0
+				);
+
+				var indexData = [0];
+				for(var row=0;row<divisiones;++row)
+				{
+					if(row%2 == 0)
+					{
+						for(var i=0;i<=divisiones;++i)
+						{
+							if(i!=0)
+							{
+								indexData.push( i + row*(divisiones+1));								
+							}
+							indexData.push(i + (row+1)*(divisiones+1));	
+
+						}
+					}else{
+						for(var i=0;i<=divisiones;++i)
+						{
+							if(i!=0)
+							{
+								indexData.push( -(i+1) + (row+1)*(divisiones+1));	
+							}
+							indexData.push(-(i+1) + (row+2)*(divisiones+1));	
+						}						
+					}	
+				}
+
+				trianglesVerticeBuffer = gl.createBuffer();
+				gl.bindBuffer(gl.ARRAY_BUFFER, trianglesVerticeBuffer);
+				gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertexPositionData), gl.STATIC_DRAW);
+				trianglesVerticeBuffer.itemSize = 3;
+				trianglesVerticeBuffer.numItems = vertexPositionData.length / 3;
+
+				vertexIndexBuffer = gl.createBuffer();
+				gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, vertexIndexBuffer);
+				gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indexData), gl.STREAM_DRAW);
+				vertexIndexBuffer.itemSize = 3;
+				vertexIndexBuffer.numItems = indexData.length;
+            }
+
+            function updateRotationX(){
+        		angleX=anglex.value;
+      		}
+      		function updateRotationY(){
+        		angleY=angley.value;
+      		}
+		</script>
+		<script id="vertexShader" type="x-shader/x-vertex">
+			attribute vec3 aVertexPosition;
+			
+			uniform mat4 uPMatrix;
+			uniform mat4 uMVMatrix;
+		
+			varying highp vec3 position;
+		
+			void main(void) {
+				position = aVertexPosition;
+				position.y *= 1.2;
+				gl_Position = uPMatrix * uMVMatrix * vec4(position, 1.0);
+			}
+		</script>
+		<script id="fragmentShader" type="x-shader/x-fragment">
+			varying highp vec3 position;
+			
+			void main(void) {   		
+				gl_FragColor = vec4(position.y*.125, .1+position.y*.125,position.y*.125, 1.0);
+			}
+		</script>
+	</head>
+	<body onload="initWebGL()">
+		<canvas id="my-canvas" width="500" height="500">
+		Your browser does not support the HTML5 canvas element.
+		</canvas>
+		Rotar x:<input type="range" id="anglex" oninput="updateRotationX()" min="0" max="360" value="0">
+  		Rotar y:<input type="range" id="angley" oninput="updateRotationY()" min="0" max="360" value="0">
+	</body>
+</html>		
