@@ -21,6 +21,7 @@ and open the template in the editor.
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" ></script>
+        <script src="js/smooth-scroll.js"></script>
     </head>
     <body>
         <header>
@@ -35,7 +36,7 @@ and open the template in the editor.
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a href=""><h4>VMF</h4></a>
+                    <a data-scroll href="#ancla-0"><h4>VMF</h4></a>
                 </div>
                 <!--Division principal-->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -48,16 +49,16 @@ and open the template in the editor.
                     </form>
                     <!--Conjunto de opciones(situadas a la derecha)-->
                     <ul class="nav navbar-nav navbar-right elem-barra">
-                        <li><a href="#1" class="scrollable">Quien soy</a></li>
-                        <li><a href="#2" class="scrollable">Aptitudes</a></li>
-                        <li><a href="#3" class="scrollable">Proyectos</a></li>
+                        <li><a data-scroll id="nav1" href="#ancla-1" class="1 scroll">Quien soy</a></li>
+                        <li><a data-scroll id="nav2" href="#ancla-2" class="2 scroll">Aptitudes</a></li>
+                        <li><a data-scroll id="nav3" href="#ancla-3" class="3 scroll">Proyectos</a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
         </header>
         <div class="container-fluid principal">
-            <div class="apartado" id="0">
+            <div class="apartado ancla" id="ancla-0">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-xs-12">
                         <h2 class="text-center"><img src="img/prisioner.png" class="img-circle text-center" style="width: 200px;height: 200px;">
@@ -77,7 +78,8 @@ and open the template in the editor.
                     </div>
                 </div>
             </div>
-            <div class="row apartado gray-row" id="1">
+            <div class="ancla" id="ancla-1"></div>
+            <section class="row apartado gray-row" id="1">
                 <dl class="dl-horizontal">
                     <dt>
                         <h3 class="text-center">¿Quien soy yo?</h3>
@@ -88,8 +90,9 @@ and open the template in the editor.
                         Actualmente estudio en la Universidad de Valladolid</p>
                     </dd>
                 </dl>
-            </div>
-            <div class="row apartado" id="2">
+            </section>
+            <div class="ancla" id="ancla-2"></div>
+            <section class="row apartado" id="2">
                 <dl class="dl-horizontal">
                     <dt>
                         <h3 class="text-center"><br><br>Aptitudes</h3>
@@ -105,8 +108,9 @@ and open the template in the editor.
                         </ul>
                     </dd>
                 </dl>
-            </div>
-            <div class="row apartado gray-row" id="3">
+            </section>
+            <div class="ancla" id="ancla-3"></div>
+            <section class="row apartado gray-row" id="3">
                 <dl class="dl-horizontal">
                     <dt>
                         <h3 class="text-center">Proyectos<br> desarrollados</h3>
@@ -191,7 +195,10 @@ and open the template in the editor.
                         <p>Para ver estos y otro proyectos visitad mi <a href="http://github.com/Vhollow">Github</a></p>
                     </dd>
                 </dl>
-            </div>
+            </section>
         </div>
+        <script>
+    		smoothScroll.init();
+		</script>
     </body>
 </html>
