@@ -6,6 +6,7 @@
 			body{ background-color: grey; }
 			canvas{ background-color: white; }
 		</style>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" >
         <script src="./jquery.min.js"></script>
 		<script src="./webgl-debug.js"></script>		
 		<script src="./gl-matrix-min.js"></script>
@@ -302,11 +303,13 @@
 			}
 		</script>
 	</head>
-	<body onload="initWebGL()">
+	<body onload="initWebGL()" style="padding-left: 3%;padding-top: 3%">
 		<canvas id="my-canvas" width="500" height="500">
 		Your browser does not support the HTML5 canvas element.
 		</canvas>
-		Rotar x:<input type="range" id="anglex" oninput="updateRotationX()" min="0" max="360" value="0">
-  		Rotar y:<input type="range" id="angley" oninput="updateRotationY()" min="0" max="360" value="0">
+		<div style=" width: 20%">Rotar x:<input type="range" id="anglex" oninput="updateRotationX()" min="0" max="360" value="0"></div>
+  		<div style=" width: 20%">Rotar y:<input type="range" id="angley" oninput="updateRotationY()" min="0" max="360" value="0"></div>
+  		
+  		<div style="position: fixed;top: 5%; right: 5%;"><a href="../index.html"><button class="btn btn-primary">Volver</button></a></div>
 	</body>
 </html>		
