@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Vicente Martínez</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" >
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" >
+        <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
+
+        <link rel="stylesheet" href="../mystyle.css">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" ></script>
+        <!--Smooth scroll-->
+        <script src="../js/smooth-scroll.js"></script>
+    </head>
+    <body>
+        <header>
+        <!--Barra de navegacion-->
+        <nav class="navbar navbar-inverse container-fluid fixed">
+            <div class="row">
+                <div class="navbar-header col-lg-1">
+                    <!--Icono de la barra-->
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a><h4>VMF</h4></a>
+                </div>
+                <!--Division principal-->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <!--Formulario de busqueda-->
+                    <!--Conjunto de opciones(situadas a la derecha)-->
+                    <ul class="nav navbar-nav navbar-right elem-barra">
+                    	<li><a href="../">Inicio</a></li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Idioma/Language<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href=""><span  class="flag-icon back-ES"></span> Español</a></li>
+                            <li><a href="../EN/Projects"><span  class="flag-icon back-EN"></span> English</a></li>
+                          </ul>
+                        </li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+        </header>
+        <div id="Inicio"></div>
+        <div class="container-fluid principal">
+          <h1 class="text-center">Mis proyectos </h1>
+
+          <div class="cont-cuadro">
+            <div class="cuadro">
+              <div class="footcuadro"></div>
+            </div>
+            <h4>Fecha de realizacion:</h4>
+          </div>
+
+          <div class="cont-cuadro">
+            <div class="cuadro">
+              <div class="footcuadro"></div>
+            </div>
+            <h4>Fecha de realizacion:</h4>
+          </div>
+
+        </div>
+        <script>
+    		smoothScroll.init();
+		</script>
+    </body>
+</html>
