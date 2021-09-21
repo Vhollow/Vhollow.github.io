@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Landing from './views/PruebaLanding.vue'
+import Landing from './views/Landing.vue'
 
 Vue.use(Router)
 

@@ -1,3 +1,7 @@
 {
-  "home": "Inicio"
+  "home": "Inicio",
+  "about_me": {
+    "title": "Sobre mi",
+    "main_text": "Soy un Ingeniero informático de Valladolid, graduado en la mención de Computación; apasionado de la informática gráfica y la robótica, actualmente en busqueda de empleo.\n En esta página podrás encontrar información sobre mí así como algunos de los proyectos que he desarrollado."
+  }
 }

@@ -1,3 +1,7 @@
 {
-  "home": "Home"
+  "home": "Home",
+  "about_me": {
+    "title": "About me",
+    "main_text": ""
+  }
 }
