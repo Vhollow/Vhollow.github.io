@@ -12,7 +12,8 @@
     "demo": "vue-cli-service serve --open demo/main.js",
     "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/locales/**/*.json\"",
     "remove-demo": "del-cli demo",
-    "start": "vue-cli-service serve --open"
+    "start": "vue-cli-service serve --open",
+    "deploy": "sh deploy.sh"
   },
   "dependencies": {
     "core-js": "^3.1.2",
