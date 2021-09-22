@@ -16,13 +16,18 @@
             <img id="imagen-principal" class="hoverable" src="../assets/img/prisioner.png"/>
             <ul id="links">
                 <li class="link-item" id="link1">
-                    <a href="#menu">
+                    <a href="https://github.com/Vhollow">
                         <mdb-icon fab icon="github" />
                     </a>
                 </li>
                 <li class="link-item" id="link2">
-                    <a href="#menu">
+                    <a href="https://www.linkedin.com/in/vicente-martinez-franco-928697b8">
                         <mdb-icon fab icon="linkedin-in" />
+                    </a>
+                </li>
+                <li class="link-item" id="link3">
+                    <a href="#menu">
+                        <mdb-icon icon="at" />
                     </a>
                 </li>
             </ul>
@@ -76,6 +81,8 @@ import {
     height: 33vh;
     margin-top: 25vh;
     border-radius: 50%;
+    position: relative;
+    z-index:2;
 }
 #seccion-prueba {
     background-color: black;
@@ -88,10 +95,10 @@ import {
     height: 33vh;
     position: absolute;
     left: 50%;
-    top: 33vh;
+    top: 25vh;
     list-style: none;
     font-size: 200;
-    margin: 0 0 0 -17.5vh;
+    margin: 0 0 0 -16.5vh;
 }
 .link-item {
     width: 70px;
@@ -121,34 +128,47 @@ import {
     color: white;
 }
 #link1{
-    transform: translateX(70px) translateY(25vh);
     z-index: 1;
-    animation: anim-link1 1s;
+    animation: anim-link1 0.5s;
+    transform: rotate(30deg) translateY(32vh) rotate(-30deg);
 }
 @keyframes anim-link1 {
     0% {
-        transform: translateX(70px) translateY(0vh);
+        transform: translate(0);
         z-index: 1;
     }
     100%{
-        transform: translateX(70px) translateY(25vh);
-        transition-delay: 0.1s;
+        transform: rotate(30deg) translateY(32vh) rotate(-30deg);
         z-index: 1;
     }
 }
 #link2{
-    transform: translateX(-70px) translateY(25vh);
     z-index: 1;
     animation: anim-link2 1s;
+    transform: translateY(34vh);
 }
 @keyframes anim-link2 {
     0% {
-        transform: translateX(-70px) translateY(0vh);
+        transform: translate(0px);
         z-index: 1;
     }
     100%{
-        transform: translateX(-70px) translateY(25vh);
-        transition-delay: 0s;
+        transform: translateY(34vh);
+        z-index: 1;
+    }
+}
+#link3{
+    z-index: 1;
+    animation: anim-link3 1.5s;
+    transform: rotate(-30deg) translateY(32vh) rotate(30deg);
+}
+@keyframes anim-link3 {
+    0% {
+        transform: rotate(-30deg);
+        z-index: 1;
+    }
+    100%{
+        transform: rotate(-30deg) translateY(32vh) rotate(30deg);
         z-index: 1;
     }
 }
